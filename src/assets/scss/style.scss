@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+@import 'parts/mixins.scss';
+
+body{
+    background-color: green;
+    color: $primary_color;
+    font-weight: 600;
+    border-bottom: 1px solid #f00;
+    background: linear-gradient(#e98a00, #f5aa2f);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-top: 50px;
+    padding-bottom: 100px;
+}

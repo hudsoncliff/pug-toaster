@@ -1,0 +1,41 @@
+{
+  "name": "pug-toaster",
+  "version": "1.0.0",
+  "description": "Template for pug projects with gulp tasks for modern web development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hudsoncliff/pug-toaster.git"
+  },
+  "keywords": [
+    "pug",
+    "gulp",
+    "boilerplate"
+  ],
+  "author": "Kai Ono",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hudsoncliff/pug-toaster/issues"
+  },
+  "homepage": "https://github.com/hudsoncliff/pug-toaster#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1"
+  }
+}
