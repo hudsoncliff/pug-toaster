@@ -19,8 +19,8 @@ var src = {
     'root': 'src/',
     'html': ['src/**/*.pug', '!' + 'src/**/_*.pug'],
     'json': '_data/',
-    'css': ['src/**/*.css', 'src/**/*.scss'],
     'js': '**/*.js',
+    'css': 'assets/css/**/*.css',
     'sass': 'assets/scss/**/*.scss',
     'img': 'assets/img'
 };
@@ -47,7 +47,7 @@ gulp.task('html', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('css', function() {
+gulp.task('scss', function() {
     return gulp
         .src(src.root + src.sass)
         .pipe(plumber({
@@ -56,6 +56,18 @@ gulp.task('css', function() {
         .pipe(sass({ outputStyle: 'expanded'}))
         .pipe(autoprefixer({browsers: ["last 2 versions"]}))
         .pipe(gulp.dest(dest.root + dest.css))
+        .pipe(cleanCss({debug: true}, (details) => {
+            console.log(`${details.name}: ${details.stats.originalSize}`);
+            console.log(`${details.name}: ${details.stats.minifiedSize}`);
+        }))
+        .pipe(rename({ suffix: ".min" }))
+        .pipe(gulp.dest(dest.root + dest.css))
+        .pipe(browserSync.stream());
+});
+
+gulp.task('css', function() {
+    return gulp
+        .src(src.root + src.css)
         .pipe(cleanCss({debug: true}, (details) => {
             console.log(`${details.name}: ${details.stats.originalSize}`);
             console.log(`${details.name}: ${details.stats.minifiedSize}`);
@@ -111,7 +123,8 @@ gulp.task('browser-sync', function() {
 
 gulp.task('watch', function(){
     gulp.watch(src.html, gulp.task('html'));
-    gulp.watch(src.css, gulp.task('css'));
+    gulp.watch(src.root + src.sass, gulp.task('scss'));
+    gulp.watch(src.root + src.css, gulp.task('css'));
     gulp.watch(src.root + src.js, gulp.task('js'));
     gulp.watch(src.root + src.img, gulp.task('imagemin'));
 });
