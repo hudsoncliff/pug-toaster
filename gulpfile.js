@@ -9,6 +9,8 @@ var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 var browserSync = require('browser-sync');
+var imagemin = require('gulp-imagemin');
+var changed = require('gulp-changed');
 
 /**
  * dev dir
@@ -20,6 +22,7 @@ var src = {
     'css': ['src/**/*.css', 'src/**/*.scss'],
     'js': '**/*.js',
     'sass': 'assets/scss/**/*.scss',
+    'img': 'assets/img'
 };
 
 /**
@@ -29,7 +32,8 @@ var dest = {
     'root': 'dest/',
     'html': 'dest/',
     'css': 'assets/css',
-    'js': 'assets/js'
+    'js': 'assets/js',
+    'img': 'assets/img'
 };
 
 gulp.task('html', function() {
@@ -74,6 +78,27 @@ gulp.task('js', function() {
         .pipe(browserSync.stream());
 });
 
+gulp.task('imagemin', function() {
+    var srcGlob = src.root + src.img + '/**/*.+(jpg|jpeg|png|gif|svg)';
+    var dstGlob = dest.root + dest.img;
+    return gulp
+        .src( srcGlob )
+        .pipe(plumber())
+        .pipe(changed( srcGlob ))
+        .pipe(imagemin([
+            imagemin.gifsicle({interlaced: true}),
+            imagemin.jpegtran({progressive: true}),
+            imagemin.optipng({optimizationLevel: 7}),
+            imagemin.svgo({
+                plugins: [
+                    {removeViewBox: true},
+                    {cleanupIDs: false}
+                ]
+            })
+        ]))
+        .pipe(gulp.dest( dstGlob ));
+});
+
 gulp.task('browser-sync', function() {
     browserSync({
         server: {
@@ -88,4 +113,5 @@ gulp.task('watch', function(){
     gulp.watch(src.html, gulp.task('html'));
     gulp.watch(src.css, gulp.task('css'));
     gulp.watch(src.root + src.js, gulp.task('js'));
+    gulp.watch(src.root + src.img, gulp.task('imagemin'));
 });
