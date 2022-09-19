@@ -1,0 +1,37 @@
+body{
+    background-color: #fff;
+    color: #333;
+    font-family: $font-gothic;
+    line-height: 1.5;
+    font-size: 16px;
+    font-feature-settings: "palt";
+}
+
+a{
+    color: #333;
+    text-decoration: none;
+    @include transition;
+    &:hover{
+        text-decoration: none;
+    }
+}
+
+img{
+    vertical-align: top;
+    max-width: 100%;
+    height: auto;
+}
+
+br {
+    &.pc {
+        @include mq() {
+            display: none;
+        }
+    }
+    &.sp {
+        display: none;
+        @include mq() {
+            display: inline;
+        }
+    }
+}
